@@ -7,6 +7,7 @@ This Statamic v3 addon provides an easy way to integrate with [MeiliSearch](http
 
 ## Requirements
 
+* MeiliSearch 0.14+
 * PHP 7.2+
 * Statamic v3+
 * Laravel 7+
@@ -18,6 +19,8 @@ You can install this addon via composer with the following command or from the S
 ```bash
 composer require kind-work/meili-search
 ```
+
+For instructions on how to install MeiliSearch please see [their documentation](https://docs.meilisearch.com/guides/advanced_guides/installation.html).
 
 ## Configuration
 
@@ -33,7 +36,9 @@ MEILI_PUBLIC_KEY=your-public-key-here
 
 After you add your master key you can use the following command to get your private and public keys.
 
-`php please meili-search:keys`
+```bash
+php please meili-search:keys
+```
 
 ### Settings
 To configure what collections you would like to index, publish the config file too `config/meili_search.php` by running the following command. Then customize the indexes section of the file.
