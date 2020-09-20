@@ -1,0 +1,32 @@
+{
+    "name": "kind-work/meili-search",
+    "description": "Use MeiliSearch to provide instant search for Statamic V3.",
+    "type": "statamic-addon",
+    "require": {
+      "meilisearch/meilisearch-php": "^0.13.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "KindWork\\MeiliSearch\\": "src"
+        }
+    },
+    "authors": [
+      {
+        "name": "Jonathan Cohlmeyer"
+      }
+    ],
+    "support": {
+      "email": "help@kind.work"
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic V3 Meili Search Addon",
+            "description": "Use MeiliSearch to provide instant search for Statamic V3."
+        },
+        "laravel": {
+            "providers": [
+                "KindWork\\MeiliSearch\\ServiceProvider"
+            ]
+        }
+    }
+}
