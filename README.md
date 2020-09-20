@@ -6,14 +6,12 @@
 This Statamic v3 addon provides an easy way to integrate with [MeiliSearch](https://www.meilisearch.com/), a powerful, fast, open-source, easy to use and deploy search engine.
 
 ## Requirements
-
 * MeiliSearch 0.14+
 * PHP 7.2+
 * Statamic v3+
 * Laravel 7+
 
 ## Installation
-
 You can install this addon via composer with the following command or from the Statamic control panel.
 
 ```bash
@@ -23,7 +21,6 @@ composer require kind-work/meili-search
 For instructions on how to install MeiliSearch please see [their documentation](https://docs.meilisearch.com/guides/advanced_guides/installation.html).
 
 ## Configuration
-
 ### .env
 Configure the addon by setting your MeiliSearch URL and API Keys in your `.env` file.
 
@@ -47,14 +44,28 @@ To configure what collections you would like to index, publish the config file t
 php artisan vendor:publish --tag="meili_search-config"
 ```
 
-## Changelog
+## Indexing
+When a collection entry is created, published, unpublished, saved or deleted via the Statamic control panel it will automatically be added, updated in or removed from the indexes configured for the appropriate collection.
 
+The following connivence commands are available to help indexing, especially when updating content files manually.
+
+```bash
+php please meili-search:keys
+php please meili-search:index help
+php please meili-search:index create [Your MeiliSearch uid]
+php please meili-search:index list
+php please meili-search:index clear [Your MeiliSearch uid]
+php please meili-search:index delete [Your MeiliSearch uid]
+php please meili-search:documents help
+php please meili-search:documents update
+```
+
+
+## Changelog
 Please see the [Release Notes](https://statamic.com/addons/jrc9designstudio/meili-search/release-notes) for more information what has changed recently.
 
 ## Security
-
 If you discover any security related issues, please email [security@kind.work](mailto:security@kind.work) instead of using the issue tracker.
 
 ## License
-
 This is commercial software. You may use the package for your sites. Each site requires its own license. You can purchase a licence from [The Statamic Marketplace](https://statamic.com/addons/jrc9designstudio/meili-search).

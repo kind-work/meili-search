@@ -14,7 +14,7 @@ class DocumentsCommand extends Command {
 
   protected $name = 'meili-search:documents';
   protected $description = 'Document convenience commands';
-  protected $signature = 'meili-search:documents {method=null} {document=null}';
+  protected $signature = 'meili-search:documents {method=null}';
   protected $methods = ['help', 'update'];
   protected $client;
 
