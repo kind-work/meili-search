@@ -64,10 +64,14 @@ return [
   |
   */
 
-  'indexes' => [
-    'kindwork' => [
-      'collection:2fa_docs' => [ 'title', 'content' ],
-      'collection:pages' => [ 'title', 'content' ],
-    ],
-  ],
+  // This is an example, please change it to fit your collections and fields.
+  // 'indexes' => [
+  //   'default' => [
+  //     'collection:pages' => [ 'title', 'slug', 'content' ],
+  //     'collection:blog' => [ 'title', 'date', 'content' ],
+  //   ],
+  //   'store' => [
+  //     'collection:products' => [ 'title', 'slug', 'description', 'price' ],
+  //   ],
+  // ],
 ];

@@ -38,10 +38,10 @@ php please meili-search:keys
 ```
 
 ### Settings
-To configure what collections you would like to index, publish the config file too `config/meili_search.php` by running the following command. Then customize the indexes section of the file.
+To configure what collections you would like to index, publish the config file to `config/meili_search.php` by running the following command. Then customize the indexes section of the file.
 
 ```bash
-php artisan vendor:publish --provider="KindWork\MeiliSearch\ServiceProvider"
+php artisan vendor:publish --tag="meili-search-config"
 ```
 
 ## Indexing
@@ -65,7 +65,7 @@ php please meili-search:documents update
 Please see the [Release Notes](https://statamic.com/addons/jrc9designstudio/meili-search/release-notes) for more information what has changed recently.
 
 ## Security
-If you discover any security related issues, please email [security@kind.work](mailto:security@kind.work) instead of using the issue tracker.
+If you discover any security-related issues, please email [security@kind.work](mailto:security@kind.work) instead of using the issue tracker.
 
 ## License
 This is commercial software. You may use the package for your sites. Each site requires its own license. You can purchase a licence from [The Statamic Marketplace](https://statamic.com/addons/jrc9designstudio/meili-search).

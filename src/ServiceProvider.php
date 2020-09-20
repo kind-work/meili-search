@@ -23,20 +23,5 @@ class ServiceProvider extends AddonServiceProvider {
 
   public function boot() {
     parent::boot();
-
-    $this->bootAddonConfig();
-  }
-
-  protected function bootAddonConfig() {
-    $this->publishes([
-      __DIR__.'/../resources/config/meili_search.php' => config_path('meili_search.php'),
-    ]);
-    return $this;
-  }
-
-  public function register() {
-    $this->mergeConfigFrom(
-      __DIR__.'/../resources/config/meili_search.php', 'meili_search'
-    );
   }
 }
