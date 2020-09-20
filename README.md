@@ -41,7 +41,7 @@ php please meili-search:keys
 To configure what collections you would like to index, publish the config file too `config/meili_search.php` by running the following command. Then customize the indexes section of the file.
 
 ```bash
-php artisan vendor:publish --tag="meili_search-config"
+php artisan vendor:publish --provider="KindWork\MeiliSearch\ServiceProvider"
 ```
 
 ## Indexing

@@ -23,6 +23,8 @@ class ServiceProvider extends AddonServiceProvider {
 
   public function boot() {
     parent::boot();
+
+    $this->bootAddonConfig();
   }
 
   protected function bootAddonConfig() {

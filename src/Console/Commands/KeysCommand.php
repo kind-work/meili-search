@@ -20,9 +20,9 @@ class KeysCommand extends Command {
     $keys = $this->client->getKeys();
     $this->info('Keys:');
     $this->line('
-      Master:   ' . Config::get("meili_search.master_key") . '
-      Private:  ' . $keys['private'] . '
-      Public:   ' . $keys['public'] . '
+      MEILI_MASTER_KEY=' . Config::get("meili_search.master_key") . '
+      MEILI_PRIVATE_KEY=' . $keys['private'] . '
+      MEILI_PUBLIC_KEY=' . $keys['public'] . '
     ');
   }
 }

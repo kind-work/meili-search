@@ -34,7 +34,7 @@ class DocumentsCommand extends Command {
   private function help() {
     $this->info('Usage:');
     $this->line('
-      meili-search:documents [method=help] [document=null]
+      meili-search:documents [method=help]
     ');
     $this->info('Methods:');
     $this->line('
