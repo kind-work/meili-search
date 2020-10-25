@@ -11,8 +11,6 @@ class EntryDeletedListener {
     $client = new Client(Config::get('meili-search.url'), Config::get('meili-search.private_key'));
     $indexes = Config::get('meili_search.indexes');
 
-    dump($event->entry);
-
     //Loop over all the configured indexes
     foreach($indexes as $indexName => $indexConfigs) {
       // Loop over all the configured collection(s) for this index
