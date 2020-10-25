@@ -38,7 +38,7 @@ php please meili-search:keys
 ```
 
 ### Settings
-To configure what collections you would like to index, publish the config file to `config/meili-search.php` by running the following command. Then customize the indexes section of the file.
+To configure what collections you would like to index, publish the config file to `config/meili_search.php` by running the following command. Then customize the indexes section of the file.
 
 ```bash
 php artisan vendor:publish --tag="meili-search-config"
@@ -61,7 +61,7 @@ php please meili-search:documents update
 ```
 
 ## Searching
-Searching is best done with JavaScript talking to MeiliSearch directly. This will give you the most peformant real time searches. Here is a simple example of how you could do this with [AlpineJS](https://github.com/alpinejs/alpine) and [TailwindCCS](https://tailwindcss.com).
+Searching is best done with JavaScript talking to MeiliSearch directly. This will give you the most performant real time searches. Here is a simple example of how you could do this with [AlpineJS](https://github.com/alpinejs/alpine) and [TailwindCCS](https://tailwindcss.com).
 
 ***Note:** These steps assume you already have AlpineJS and Tailwind CCS already set up and working in your project.*
 
@@ -85,7 +85,7 @@ window.client = new MeiliSearch({
 ```
 
 ### Customize your Search Component
-Here is a basic autocomplete using AlpineJS and Tailwind CCS, feel free copy it, customize it, or just use it as insperation to do something completly diffrent.
+Here is a basic autocomplete using AlpineJS and Tailwind CCS, feel free copy it, customize it, or just use it as inspiration to do something completely different.
 ```html
 <div
   x-data="{

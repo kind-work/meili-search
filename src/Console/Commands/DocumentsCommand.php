@@ -19,16 +19,18 @@ class DocumentsCommand extends Command {
   protected $client;
 
   public function handle() {
-    $this->client = new Client(Config::get('meili-search.url'), Config::get('meili-search.private_key'));
+    $this->client = new Client(Config::get('meili_search.url'), Config::get('meili_search.private_key'));
     $method = $this->argument('method');
 
     if($method == 'null') {
       $this->help();
+      return;
     } elseif (!in_array($method, $this->methods, true)) {
       $this->warn('Method not supported. Supported methods are: ' . join(', ', $this->methods));
-    } else {
-      $this->{$method}();
+      return;
     }
+
+    $this->{$method}();
   }
 
   private function help() {
@@ -45,7 +47,7 @@ class DocumentsCommand extends Command {
 
   private function update() {
     // Get the indexes configured
-    $indexes = Config::get('meili-search.indexes');
+    $indexes = Config::get('meili_search.indexes');
 
     // For each index lets get the documents and update
     foreach($indexes as $indexName => $indexConfigs) {

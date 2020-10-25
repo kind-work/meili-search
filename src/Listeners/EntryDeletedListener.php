@@ -8,13 +8,13 @@ use Statamic\Events\EntryDeleted;
 
 class EntryDeletedListener {
   public function handle(EntryDeleted $event) {
-    $client = new Client(Config::get('meili-search.url'), Config::get('meili-search.private_key'));
+    $client = new Client(Config::get('meili_search.url'), Config::get('meili_search.private_key'));
     $indexes = Config::get('meili_search.indexes');
 
     //Loop over all the configured indexes
     foreach($indexes as $indexName => $indexConfigs) {
       // Loop over all the configured collection(s) for this index
-      foreach($indexConfigs as $config => $fields) {
+      foreach(array_keys($indexConfigs) as $config) {
         // Get the collection handle from the config
         $collectionHandle = explode(':', $config)[1];
 

@@ -16,11 +16,11 @@ class KeysCommand extends Command {
   protected $client;
 
   public function handle() {
-    $this->client = new Client(Config::get("meili-search.url"), Config::get("meili-search.master_key"));
+    $this->client = new Client(Config::get("meili_search.url"), Config::get("meili_search.master_key"));
     $keys = $this->client->getKeys();
     $this->info('Keys:');
     $this->line('
-      MEILI_MASTER_KEY=' . Config::get("meili-search.master_key") . '
+      MEILI_MASTER_KEY=' . Config::get("meili_search.master_key") . '
       MEILI_PRIVATE_KEY=' . $keys['private'] . '
       MEILI_PUBLIC_KEY=' . $keys['public'] . '
     ');

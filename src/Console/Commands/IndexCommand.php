@@ -20,17 +20,20 @@ class IndexCommand extends Command {
     public function handle() {
       $this->index = $this->argument('index');
       $method = $this->argument('method');
-      $this->client = new Client(Config::get("meili-search.url"), Config::get("meili-search.private_key"));
+      $this->client = new Client(Config::get("meili_search.url"), Config::get("meili_search.private_key"));
 
       if ($method == 'null') {
         $this->help();
-      } elseif (!$this->index && $method != 'index') {
+        return;
+      } elseif ($this->index == 'null' && !($method == 'list' || $method == 'help')) {
         $this->warn('A index name is required!');
+        return;
       } elseif (!in_array($method, $this->methods, true)) {
         $this->warn('Method not supported. Supported methods are: ' . join(', ', $this->methods));
-      } else {
-        $this->{$method}();
+        return;
       }
+
+      $this->{$method}();
     }
 
     private function help() {
@@ -59,7 +62,7 @@ class IndexCommand extends Command {
 
     private function list() {
       // Get the indexes configured
-      $siteIndexes = array_keys(Config::get('meili-search.indexes'));
+      $siteIndexes = array_keys(Config::get('meili_search.indexes'));
       $indexes = $this->client->getAllIndexes();
       $this->info('Indexes:');
       foreach($indexes as $index) {

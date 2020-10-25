@@ -20,8 +20,8 @@
     },
     "extra": {
         "statamic": {
-            "name": "Statamic V3 Meili Search Addon",
-            "description": "Use MeiliSearch to provide instant search for Statamic V3."
+            "name": "MeiliSearch",
+            "description": "Use MeiliSearch to provide instant search"
         },
         "laravel": {
             "providers": [
