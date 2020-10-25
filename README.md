@@ -60,6 +60,105 @@ php please meili-search:documents help
 php please meili-search:documents update
 ```
 
+## Searching
+Searching is best done with JavaScript talking to MeiliSearch directly. This will give you the most peformant real time searches. Here is a simple example of how you could do this with [AlpineJS](https://github.com/alpinejs/alpine) and [TailwindCCS](https://tailwindcss.com).
+
+***Note:** These steps assume you already have AlpineJS and Tailwind CCS already set up and working in your project.*
+
+### Install the MeiliSearch NPM module
+```bash
+npm install meilisearch
+```
+or
+```bash
+yarn add meilisearch
+```
+
+### Import and set up MeiliSearch
+```js
+import MeiliSearch from 'meilisearch';
+
+window.client = new MeiliSearch({
+  host: 'http(s)://Your MeiliSearch address & port',
+  apiKey: 'Your MeiliSearch PUBLIC Key',
+});
+```
+
+### Customize your Search Component
+Here is a basic autocomplete using AlpineJS and Tailwind CCS, feel free copy it, customize it, or just use it as insperation to do something completly diffrent.
+```html
+<div
+  x-data="{
+    searchString: '',
+    results: {
+      hits: [],
+    },
+    index: window.client.getIndex('Your Index UID Goes Here'),
+    async search() {
+      this.state = 'searching';
+      this.results = await this.index.search(this.searchString);
+    }
+  }"
+  class="relative"
+>
+  <label
+    class="sr-only"
+  >
+    Search
+  </label>
+  <input
+    x-model="searchString"
+    x-on:input="search()"
+    type="search"
+    class="
+      px-2 py-1
+      border-2 border-solid border-gray-300 rounded
+      focus:outline-none focus:shadow-outline
+    "
+  />
+  <div
+    x-cloak
+    x-show="searchString.length > 0"
+    class="
+      absolute left-0
+      w-full
+      mt-1 py-1
+      bg-white
+      border-2 border-solid border-grey-200 rounded
+    "
+  >
+    <p
+      x-show='results.hits.length < 1'
+    >
+      No results
+    </p>
+    <ul
+      x-show='results.hits.length > 0'
+    >
+      <template
+        x-for='result in results.hits'
+        :key="result.id"
+      >
+        <li>
+          <a
+            :href="result.uri"
+            class="
+              px-2 py-1
+              hover:bg-gray-300 focus:bg-gray-300
+              transition-colors duration-100 ease-in-out delay-75
+              focus:outline-none focus:shadow-outline
+            "
+          >
+            <h2
+              x-text="result.title"
+            ></h2>
+          </a>
+        </li>
+      </template>
+    </ul>
+  </div>
+</div>
+```
 
 ## Changelog
 Please see the [Release Notes](https://statamic.com/addons/jrc9designstudio/meili-search/release-notes) for more information what has changed recently.
