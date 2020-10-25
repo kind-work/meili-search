@@ -8,8 +8,8 @@ use Statamic\Events\EntrySaved;
 
 class EntrySavedListener {
   public function handle(EntrySaved $event) {
-    $client = new Client(Config::get('meili_search.url'), Config::get('meili_search.private_key'));
-    $indexes = Config::get('meili_search.indexes');
+    $client = new Client(Config::get('meili-search.url'), Config::get('meili-search.private_key'));
+    $indexes = Config::get('meili-search.indexes');
 
     //Loop over all the configured indexes
     foreach($indexes as $indexName => $indexConfigs) {
