@@ -3,7 +3,7 @@
     "description": "Use MeiliSearch to provide instant search for Statamic V3.",
     "type": "statamic-addon",
     "require": {
-      "meilisearch/meilisearch-php": "^0.13.3"
+      "meilisearch/meilisearch-php": "^0.15.1"
     },
     "autoload": {
         "psr-4": {
