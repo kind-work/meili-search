@@ -76,7 +76,7 @@ yarn add meilisearch
 
 ### Import and set up MeiliSearch
 ```js
-import MeiliSearch from 'meilisearch';
+import { MeiliSearch } from 'meilisearch'
 
 window.client = new MeiliSearch({
   host: 'http(s)://Your MeiliSearch address & port',
@@ -93,7 +93,7 @@ Here is a basic autocomplete using AlpineJS and Tailwind CCS, feel free copy it,
     results: {
       hits: [],
     },
-    index: window.client.getIndex('Your Index UID Goes Here'),
+    index: window.client.index('Your Index UID Goes Here'),
     async search() {
       this.state = 'searching';
       this.results = await this.index.search(this.searchString);
