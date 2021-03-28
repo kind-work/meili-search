@@ -4,12 +4,15 @@ namespace KindWork\MeiliSearch\Console\Commands;
 
 use Config;
 use MeiliSearch\Client;
-use \Statamic\Facades\Entry;
+use Statamic\Facades\Parse;
+use Statamic\Facades\Entry;
 use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
 use Statamic\Console\RunsInPlease;
+use Statamic\View\Cascade as ViewCascade;
 
-class DocumentsCommand extends Command {
+class DocumentsCommand extends Command
+{
   use RunsInPlease;
 
   protected $name = 'meili-search:documents';
@@ -18,22 +21,30 @@ class DocumentsCommand extends Command {
   protected $methods = ['help', 'update'];
   protected $client;
 
-  public function handle() {
-    $this->client = new Client(Config::get('meili-search.url'), Config::get('meili-search.private_key'));
+  public function handle()
+  {
+    $this->client = new Client(
+      Config::get('meili-search.url'),
+      Config::get('meili-search.private_key')
+    );
     $method = $this->argument('method');
 
-    if($method == 'null') {
+    if ($method == 'null') {
       $this->help();
       return;
     } elseif (!in_array($method, $this->methods, true)) {
-      $this->warn('Method not supported. Supported methods are: ' . join(', ', $this->methods));
+      $this->warn(
+        'Method not supported. Supported methods are: ' .
+          join(', ', $this->methods)
+      );
       return;
     }
 
     $this->{$method}();
   }
 
-  private function help() {
+  private function help()
+  {
     $this->info('Usage:');
     $this->line('
       meili-search:documents [method=help]
@@ -45,59 +56,100 @@ class DocumentsCommand extends Command {
     ');
   }
 
-  private function update() {
+  private function update()
+  {
     // Get the indexes configured
     $indexes = Config::get('meili-search.indexes');
 
     // For each index lets get the documents and update
-    foreach($indexes as $indexName => $indexConfigs) {
+    foreach ($indexes as $indexName => $indexConfigs) {
       // Say we have stared indexing a specific index
       $this->info('Updating index: ' . $indexName);
 
       // For each index map over the configured collections
       // Then collapse them into a 1 dimensional array
-      $documents = Arr::collapse(array_map(function($config, $fields) {
-        // Get the collection handle (Maybe get things other than collections later?)
-        $collectionHandle = explode(':', $config)[1];
+      $documents = Arr::collapse(
+        array_map(
+          function ($config, $fields) {
+            // Get the collection handle (Maybe get things other than collections later?)
+            $collectionHandle = explode(':', $config)[1];
 
-        // Query for the entries in the collection
-        $entries = Entry::query()
-          ->where('collection', $collectionHandle)
-          ->where('published', true)
-          ->get()
-          ->preProcessForIndex()
-          ->toArray();
+            // Query for the entries in the collection
+            $entries = Entry::query()
+              ->where('collection', $collectionHandle)
+              ->where('published', true)
+              ->get()
+              ->preProcessForIndex()
+              ->toArray();
 
-        // Return the document data for indexing with a map
-        return array_map(function($entry) use($fields) {
+            // Return the document data for indexing with a map
+            return array_map(function ($entry) use ($fields) {
+              // Find and parse any antlers fields
+              $antlersFields = array_merge(
+                ...array_map(
+                  function ($field) use ($fields, $entry) {
+                    $viewCascade = app(ViewCascade::class)->toArray();
 
-          // Merge in the id and fields
-          return array_merge(
-            // Add in the entry ID
-            [ 'id' => $entry ->id() ],
+                    return [
+                      $field => (string) Parse::template(
+                        // Get the template by key on fields
+                        $fields[$field],
+                        // Augment the data for the template and pass in the cascade
+                        array_merge($viewCascade, $entry->toAugmentedArray())
+                      ),
+                    ];
+                  },
+                  array_filter(array_keys($fields), function ($key) {
+                    // Antlers fields to parse have a key that is a of type string
+                    return gettype($key) == 'string';
+                  })
+                )
+              );
 
-            // Filter to use only the keys defined in the config
-            array_filter($entry->data()->toArray(), function($key) use($fields) {
-                return in_array($key, $fields);
-            }, ARRAY_FILTER_USE_KEY),
+              // Merge in the id and fields
+              return array_merge(
+                // Add in the entry ID
+                ['id' => $entry->id()],
 
-            // Add in the entry URLs
-            [
-              'uri' => $entry->uri(),
-              'api_url' => $entry->apiUrl(),
-            ]
-          );
-        }, $entries);
-      }, array_keys($indexConfigs), $indexConfigs));
+                // Filter to use only the keys defined in the config
+                array_filter(
+                  $entry->data()->toArray(),
+                  function ($key) use ($fields) {
+                    return in_array($key, $fields);
+                  },
+                  ARRAY_FILTER_USE_KEY
+                ),
+
+                // Add the antlers fields to the array
+                $antlersFields,
+
+                // Add in the entry URLs
+                [
+                  'uri' => $entry->uri(),
+                  'api_url' => $entry->apiUrl(),
+                ]
+              );
+            }, $entries);
+          },
+          array_keys($indexConfigs),
+          $indexConfigs
+        )
+      );
 
       // Get the index (or make it if it does not exist)
-      $index = $this->client->getOrCreateIndex($indexName, ['primaryKey' => 'id']);
+      $index = $this->client->getOrCreateIndex($indexName, [
+        'primaryKey' => 'id',
+      ]);
 
       // Find the removed document ids
       $removedDocuments = array_merge(
         array_diff(
-          array_map(function($entry) { return $entry['id']; }, $index->getDocuments()),
-          array_map(function($entry) { return $entry['id']; }, $documents)
+          array_map(function ($entry) {
+            return $entry['id'];
+          }, $index->getDocuments()),
+          array_map(function ($entry) {
+            return $entry['id'];
+          }, $documents)
         )
       );
 
