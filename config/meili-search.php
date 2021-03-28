@@ -1,7 +1,6 @@
 <?php
 
 return [
-
   /*
     |--------------------------------------------------------------------------
     | Meili Address
@@ -27,7 +26,6 @@ return [
 
   'master_key' => env('MEILI_MASTER_KEY', false),
 
-
   /*
   |--------------------------------------------------------------------------
   | Meili Search Private Key
@@ -40,7 +38,6 @@ return [
 
   'private_key' => env('MEILI_PRIVATE_KEY', false),
 
-
   /*
   |--------------------------------------------------------------------------
   | Meili Search Public Key
@@ -52,7 +49,6 @@ return [
   */
 
   'public_key' => env('MEILI_PUBLIC_KEY', false),
-
 
   /*
   |--------------------------------------------------------------------------
@@ -68,7 +64,12 @@ return [
   // 'indexes' => [
   //   'default' => [
   //     'collection:pages' => [ 'title', 'slug', 'content' ],
-  //     'collection:blog' => [ 'title', 'date', 'content' ],
+  //     'collection:blog' => [
+  //       'title',
+  //       'date',
+  //       'content',
+  //       'reading_time' => '{{ content | read_time }}'
+  //     ],
   //   ],
   //   'store' => [
   //     'collection:products' => [ 'title', 'slug', 'description', 'price' ],
