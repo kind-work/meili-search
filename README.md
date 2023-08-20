@@ -1,3 +1,5 @@
+This addon is no longer supported. For a supported addon please see: https://statamic.com/addons/elvenstar/statamic-meilisearch
+
 # Use MeiliSearch to provide instant search
 
 [![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0%2B-FF269E)](https://statamic.com)
